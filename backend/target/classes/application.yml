@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ecommerce_db}
+    username: ${SPRING_DATASOURCE_USERNAME:dashboard_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:dashboard_pass}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate          # DB managed by init.sql, not Hibernate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: ${JWT_SECRET:31ZeHd6H785gYe3tDoVl8TNDBCEfBTdpQAQvO4zMEKY=}
+  expiration: ${JWT_EXPIRATION:86400000}  # 24h in ms
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.dashboard: DEBUG
+    org.springframework.security: INFO
