@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/health", "/health", "/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
@@ -45,7 +45,22 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         var config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:*", "http://127.0.0.1:*"));
+        List<String> origins = new java.util.ArrayList<>(List.of(
+                "http://localhost:*",
+                "http://127.0.0.1:*",
+                "https://*.vercel.app"
+        ));
+
+        String customOrigins = System.getenv("CORS_ALLOWED_ORIGINS");
+        if (customOrigins != null && !customOrigins.isBlank()) {
+            for (String origin : customOrigins.split(",")) {
+                if (!origin.trim().isEmpty()) {
+                    origins.add(origin.trim());
+                }
+            }
+        }
+
+        config.setAllowedOriginPatterns(origins);
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

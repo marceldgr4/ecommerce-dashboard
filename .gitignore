@@ -1,0 +1,20 @@
+# Compiled binaries and build outputs
+target/
+backend/target/
+dist/
+frontend/dist/
+frontend/node_modules/
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# IDE and OS files
+.DS_Store
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log

@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate          # DB managed by init.sql, not Hibernate
+      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
     show-sql: false
     properties:
       hibernate:
